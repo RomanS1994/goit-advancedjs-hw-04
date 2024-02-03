@@ -1,0 +1,108 @@
+body {
+  background: #dad9d9;
+  text-align: center;
+}
+
+.search-form {
+  background-color: rgb(8, 145, 199);
+  padding: 10px;
+  margin: 20px;
+  text-align: center;
+}
+input[name='searchQuery'] {
+  border: none;
+  border-radius: 18px;
+  width: 180px;
+  height: 25px;
+}
+.gallery {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.photo-card img {
+  width: 280px;
+  height: 190px;
+}
+
+.photo-card {
+  background: #ffffff;
+
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.4);
+}
+
+.info {
+  display: flex;
+  justify-content: space-around;
+}
+
+.info-item {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+
+  text-align: center;
+}
+.load-more {
+  margin: 15px auto;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.load-more:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+.is-hidden {
+  display: none;
+}
+
+/************  ************/
+.search-form {
+  display: flex;
+  align-items: center;
+  max-width: 300px;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 25px;
+  padding: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+/* Стилізуємо текстове поле для введення пошукового запиту */
+.search-form input[type='text'] {
+  flex: 1; /* Займає всю доступну ширину */
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  outline: none;
+}
+
+/* Стилізуємо кнопку пошуку */
+.search-form button[type='submit'] {
+  background-color: #007bff; /* Синій колір кнопки */
+  color: #ffffff; /* Колір тексту на кнопці */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 10px; /* Додатковий відступ між полем вводу та кнопкою */
+}
+
+/* Стилізуємо кнопку пошуку при наведенні */
+.search-form button[type='submit']:hover {
+  background-color: #0056b3; /* Темно-синій колір при наведенні */
+}

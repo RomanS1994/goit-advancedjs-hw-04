@@ -2,6 +2,9 @@
 /************ HTTP-запити ************/
 import axios from 'axios';
 
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
 const API_KEY = '42159732-a54f57e537715c3d1f59422b1';
 const BASE_URL = 'https://pixabay.com/api/';
 
@@ -15,14 +18,22 @@ async function getApiData(value, page) {
     page: page,
     per_page: 40,
   };
-  const response = await axios.get(BASE_URL, { params });
-  return response;
-  // try {
-  //   const response = await axios.get(BASE_URL, { params });
-  //   console.log(response);
-  // } catch (error) {
-  //   console.error(error.message);
-  // }
+
+  try {
+    const response = await axios.get(BASE_URL, { params });
+    if (response.data.total) {
+      return response;
+    } else {
+      iziToast.error({
+        title: 'Oops!',
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
+        position: 'topRight',
+      }); //якщо повернувся порожній масив
+    }
+  } catch (error) {
+    console.error(error.message); // помилка зі сторони сервера
+  }
 }
 
 export { getApiData };
