@@ -23,5 +23,3 @@ function handlerScrollOpen() {
   form.classList.remove('is-hidden');
   loadMore.remove();
 }
-
-export { handlerScrollOpen, handlerLoadMoreOpen };
