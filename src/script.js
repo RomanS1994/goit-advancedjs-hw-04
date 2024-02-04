@@ -35,7 +35,7 @@ async function handlerSubmit(evt) {
   uploadedImages = 0;
   container.textContent = '';
   loadMore.classList.add('is-hidden');
-  const { value } = evt.target.elements.searchQuery;
+  value = evt.target.elements.searchQuery.value;
 
   try {
     const response = await getApiData(value, page);
