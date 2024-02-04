@@ -1,4 +1,5 @@
 import { getApiData } from './image_api';
+// import { handlerScrollOpen, handlerLoadMoreOpen } from './modal.js';
 
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -12,7 +13,7 @@ const elements = {
   loadMore: document.querySelector('.load-more'),
   guard: document.querySelector('.js-guard'),
 };
-const { form, container, loadMore } = elements;
+const { form, container, loadMore, guard } = elements;
 
 //---------------------------------------------
 /************ enable SimpleLightbox ************/
@@ -46,11 +47,12 @@ async function handlerSubmit(evt) {
         message: `Hooray! We found ${response.data.totalHits} images.`,
         position: 'topRight',
       });
-      container.insertAdjacentHTML('beforeend', createMarcup(hits));
+      container.insertAdjacentHTML('beforeend', createMarkup(hits));
       lightbox.refresh();
       loadMore.classList.remove('is-hidden');
       uploadedImages += hits.length;
       // console.log(uploadedImages);
+      observer.observe(guard);
     } else {
       iziToast.error({
         title: 'Oops!',
@@ -64,7 +66,7 @@ async function handlerSubmit(evt) {
   form.reset();
 }
 
-function createMarcup(arr) {
+function createMarkup(arr) {
   return arr
     .map(
       ({
@@ -104,7 +106,7 @@ async function handlerLoadMore() {
   page++;
   const response = await getApiData(value, page);
   const { hits, totalHits } = response.data;
-  container.insertAdjacentHTML('beforeend', createMarcup(hits));
+  container.insertAdjacentHTML('beforeend', createMarkup(hits));
   console.log(response);
   uploadedImages += hits.length;
 
@@ -121,3 +123,38 @@ async function handlerLoadMore() {
 }
 //---------------------------------------------
 /** додати вибір */
+
+const options = {
+  root: null,
+  rootMargin: '300px',
+  threshold: 0,
+};
+
+const observer = new IntersectionObserver(handlerLoadMoreObs, options);
+
+async function handlerLoadMoreObs(entries, observer) {
+  await Promise.all(
+    entries.map(async entry => {
+      if (entry.isIntersecting) {
+        console.log('yes');
+        page++;
+        const response = await getApiData(value, page);
+        const { hits, totalHits } = response.data;
+        container.insertAdjacentHTML('beforeend', createMarkup(hits));
+        uploadedImages += hits.length;
+
+        console.log(uploadedImages);
+
+        if (uploadedImages >= totalHits) {
+          observer.unobserve(guard);
+          iziToast.error({
+            title: 'Oops!',
+            message:
+              "We're sorry, but you've reached the end of search results.",
+            position: 'topRight',
+          });
+        }
+      }
+    })
+  );
+}

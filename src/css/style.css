@@ -1,6 +1,8 @@
 body {
-  background: #dad9d9;
+  background: #edecec;
   text-align: center;
+  margin: auto;
+  max-width: 1200px;
 }
 
 .search-form {
@@ -46,9 +48,9 @@ input[name='searchQuery'] {
   text-align: center;
 }
 .load-more {
-  margin: 15px auto;
+  margin: 35px auto;
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 30px;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
@@ -65,44 +67,40 @@ input[name='searchQuery'] {
   background-color: #0056b3;
   border-color: #0056b3;
 }
+
 .is-hidden {
   display: none;
 }
 
-/************  ************/
 .search-form {
   display: flex;
   align-items: center;
   max-width: 300px;
-  margin: auto;
+  margin: 20px auto;
   background-color: #ffffff;
   border-radius: 25px;
   padding: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
 }
 
-/* Стилізуємо текстове поле для введення пошукового запиту */
 .search-form input[type='text'] {
-  flex: 1; /* Займає всю доступну ширину */
+  flex: 1;
   border: none;
   padding: 10px;
   border-radius: 20px;
   outline: none;
 }
 
-/* Стилізуємо кнопку пошуку */
 .search-form button[type='submit'] {
-  background-color: #007bff; /* Синій колір кнопки */
-  color: #ffffff; /* Колір тексту на кнопці */
+  background-color: #007bff;
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
   cursor: pointer;
-  margin-left: 10px; /* Додатковий відступ між полем вводу та кнопкою */
+  margin-left: 10px;
 }
 
-/* Стилізуємо кнопку пошуку при наведенні */
 .search-form button[type='submit']:hover {
-  background-color: #0056b3; /* Темно-синій колір при наведенні */
+  background-color: #0056b3;
 }

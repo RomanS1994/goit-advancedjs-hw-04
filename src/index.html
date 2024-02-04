@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
   </head>
   <body>
-    <form class="search-form" id="search-form">
+    <form class="search-form is-hidden" id="search-form">
       <input
         type="text"
         name="searchQuery"
@@ -16,6 +17,11 @@
       />
       <button type="submit">Search</button>
     </form>
+
+    <div class="modal-content">
+      <button class="column" id="column1">load_more</button>
+      <button class="column" id="column2">Infinite_Scroll</button>
+    </div>
 
     <div class="gallery">
       <!-- Картки зображень -->
@@ -37,9 +43,11 @@
         </div>
     </div> -->
     </div>
+
     <div class="js-guard"></div>
     <button type="button" class="load-more is-hidden">Load more</button>
 
+    <script src="./modal.js" type="module"></script>
     <script src="./script.js" type="module"></script>
     <script src="./image_api.js" type="module"></script>
     <script src="./showMessage.js" type="module"></script>
