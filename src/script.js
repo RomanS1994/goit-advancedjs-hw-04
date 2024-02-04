@@ -33,6 +33,7 @@ let uploadedImages = 0;
 async function handlerSubmit(evt) {
   evt.preventDefault();
   uploadedImages = 0;
+  page = 1;
   container.textContent = '';
   loadMore.classList.add('is-hidden');
   value = evt.target.elements.searchQuery.value;
@@ -126,7 +127,7 @@ async function handlerLoadMore() {
 
 const options = {
   root: null,
-  rootMargin: '300px',
+  rootMargin: '500px',
   threshold: 0,
 };
 
@@ -158,3 +159,4 @@ async function handlerLoadMoreObs(entries, observer) {
     })
   );
 }
+console.log(uploadedImages);
