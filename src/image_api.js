@@ -7,6 +7,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 const API_KEY = '42159732-a54f57e537715c3d1f59422b1';
 const BASE_URL = 'https://pixabay.com/api/';
+const per_page = 40;
 
 async function getApiData(value, page) {
   const params = {
@@ -16,7 +17,7 @@ async function getApiData(value, page) {
     orientation: 'horizontal',
     safesearch: true,
     page: page,
-    per_page: 40,
+    per_page: per_page,
   };
 
   try {
@@ -36,4 +37,4 @@ async function getApiData(value, page) {
   }
 }
 
-export { getApiData };
+export { getApiData, per_page };

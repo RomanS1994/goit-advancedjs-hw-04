@@ -1,4 +1,4 @@
-import { getApiData } from './image_api';
+import { getApiData, per_page } from './image_api';
 // import { handlerScrollOpen, handlerLoadMoreOpen } from './modal.js';
 
 import SimpleLightbox from 'simplelightbox';
@@ -36,13 +36,13 @@ async function handlerSubmit(evt) {
   page = 1;
   container.textContent = '';
   loadMore.classList.add('is-hidden');
-  value = evt.target.elements.searchQuery.value;
+  value = evt.target.elements.searchQuery.value.trim();
 
   try {
-    const response = await getApiData(value, page);
-    // console.log(response);
-    const { hits } = response.data;
-    if (value.trim()) {
+    if (value) {
+      const response = await getApiData(value, page);
+      const { hits } = response.data;
+      console.log(hits.length);
       iziToast.success({
         title: 'Ok!',
         message: `Hooray! We found ${response.data.totalHits} images.`,
@@ -50,10 +50,17 @@ async function handlerSubmit(evt) {
       });
       container.insertAdjacentHTML('beforeend', createMarkup(hits));
       lightbox.refresh();
-      loadMore.classList.remove('is-hidden');
       uploadedImages += hits.length;
-      // console.log(uploadedImages);
-      observer.observe(guard);
+      if (hits.length >= per_page) {
+        loadMore.classList.remove('is-hidden');
+        observer.observe(guard);
+      } else {
+        iziToast.error({
+          title: 'Oops!',
+          message: "We're sorry, but you've reached the end of search results.",
+          position: 'topRight',
+        });
+      }
     } else {
       iziToast.error({
         title: 'Oops!',
@@ -159,4 +166,3 @@ async function handlerLoadMoreObs(entries, observer) {
     })
   );
 }
-console.log(uploadedImages);
