@@ -50,11 +50,14 @@ async function handlerSubmit(evt) {
       });
       container.insertAdjacentHTML('beforeend', createMarkup(hits));
       lightbox.refresh();
+
       uploadedImages += hits.length;
       if (hits.length >= per_page) {
         loadMore.classList.remove('is-hidden');
         observer.observe(guard);
       } else {
+        lightbox.refresh();
+
         iziToast.error({
           title: 'Oops!',
           message: "We're sorry, but you've reached the end of search results.",
@@ -117,6 +120,7 @@ async function handlerLoadMore() {
   container.insertAdjacentHTML('beforeend', createMarkup(hits));
   console.log(response);
   uploadedImages += hits.length;
+  lightbox.refresh();
 
   console.log(uploadedImages);
 
@@ -150,7 +154,7 @@ async function handlerLoadMoreObs(entries, observer) {
         const { hits, totalHits } = response.data;
         container.insertAdjacentHTML('beforeend', createMarkup(hits));
         uploadedImages += hits.length;
-
+        lightbox.refresh();
         console.log(uploadedImages);
 
         if (uploadedImages >= totalHits) {
