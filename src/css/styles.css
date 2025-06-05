@@ -9,9 +9,6 @@ li {
   list-style: none;
 }
 
-.hidden {
-  display: none;
-}
 body .iziToast {
   width: 432px;
   height: 88px;
@@ -130,8 +127,8 @@ body .iziToast {
 
 /* #region Loader */
 .loader {
+  display: block;
   margin: 250px auto;
-
   color: red;
   font-size: 45px;
   text-indent: -9999em;
@@ -141,7 +138,7 @@ body .iziToast {
   border-radius: 50%;
   position: relative;
   transform: translateZ(0);
-  animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
+  animation: mltShdSpin 0.7s infinite ease, round 0.7s infinite ease;
 }
 
 @keyframes mltShdSpin {
@@ -184,5 +181,7 @@ body .iziToast {
     transform: rotate(360deg);
   }
 }
-
+.hidden {
+  display: none;
+}
 /* #endregion */
