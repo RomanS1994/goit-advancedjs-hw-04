@@ -13,6 +13,7 @@ form.addEventListener('submit', handlerSubmit);
 function handlerSubmit(event) {
   event.preventDefault();
   const inputValue = event.target.elements[0].value.trim();
+
   form.reset();
 
   if (!inputValue) {
