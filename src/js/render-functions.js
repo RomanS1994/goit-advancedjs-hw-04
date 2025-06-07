@@ -3,6 +3,7 @@ const refs = {
   form: document.querySelector('.form'),
 };
 
+// функція для рендеру розмітки карток з зображеннями та описом
 export function createMarkup(dataList) {
   const markup = dataList
     .map(
@@ -42,5 +43,5 @@ export function createMarkup(dataList) {
       }
     )
     .join('');
-  refs.list.innerHTML = markup;
+  refs.list.innerHTML = markup; // вставляє в дом розмітку однією операцією
 }
