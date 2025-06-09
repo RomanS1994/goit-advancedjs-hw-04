@@ -1,11 +1,6 @@
-const refs = {
-  list: document.querySelector('.gallery'),
-  form: document.querySelector('.form'),
-};
-
 // функція для рендеру розмітки карток з зображеннями та описом
 export function createMarkup(dataList) {
-  const markup = dataList
+  return dataList
     .map(
       ({
         webformatURL,
@@ -43,5 +38,4 @@ export function createMarkup(dataList) {
       }
     )
     .join('');
-  refs.list.innerHTML = markup; // вставляє в дом розмітку однією операцією
 }
