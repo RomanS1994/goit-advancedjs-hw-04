@@ -49,48 +49,58 @@ let inputValue = '';
 let page = 1;
 let getCards = 15;
 
-function handlerSubmit(event) {
+async function handlerSubmit(event) {
+  hiddenBtn();
   event.preventDefault();
   page = 1;
   inputValue = event.target.elements[0].value.trim();
   if (!inputValue) {
+    iziToast.show({
+      message: 'Please enter your search parameters',
+    });
     return;
   }
   clearGallery();
   showLoader();
 
-  fetchUsers(inputValue, page)
-    .then(({ data }) => {
-      if (!data.total) {
-        iziToast.show({
-          message:
-            'Sorry, there are no images matching your search query. Please try again!',
-        });
-        return;
-      } else if (data.totalHits <= 15) {
-        const markup = createMarkup(data.hits);
-        refs.list.innerHTML = markup; // вставляє в дом розмітку однією операцією
-        gallery.refresh();
-        hiddenBtn();
-        iziToast.show({
-          message: "We're sorry, but you've reached the end of search results.",
-        });
-      } else {
-        const markup = createMarkup(data.hits);
-        refs.list.innerHTML = markup; // вставляє в дом розмітку однією операцією
-        gallery.refresh();
-        showBtn();
-      }
-    })
-    .catch(error => console.log(error.message))
-    .finally(() => {
+  try {
+    const response = await fetchUsers(inputValue, page);
+    const { data } = response;
+
+    console.log(response);
+
+    if (!data.total) {
+      iziToast.show({
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
+      });
       hiddenLoader();
-    });
+
+      return;
+    } else if (data.totalHits <= 15) {
+      const markup = createMarkup(data.hits);
+      refs.list.innerHTML = markup; // вставляє в дом розмітку однією операцією
+      gallery.refresh();
+      hiddenBtn();
+      iziToast.show({
+        message: "We're sorry, but you've reached the end of search results.",
+      });
+    } else {
+      const markup = createMarkup(data.hits);
+      refs.list.innerHTML = markup; // вставляє в дом розмітку однією операцією
+      gallery.refresh();
+      showBtn();
+    }
+  } catch (error) {
+    console.log(error.message);
+    hiddenLoader();
+  }
+  hiddenLoader();
 
   form.reset();
 }
 
-function handlerClick() {
+async function handlerClick() {
   if (!inputValue) {
     return;
   }
@@ -98,39 +108,40 @@ function handlerClick() {
   getCards += 15;
 
   showLoader();
-  fetchUsers(inputValue, page)
-    .then(({ data }) => {
-      if (data.totalHits <= getCards) {
-        const markup = createMarkup(data.hits);
-        list.insertAdjacentHTML('beforeend', markup); // вставляє в дом розмітку однією операцією
-        gallery.refresh();
-        hiddenBtn();
-        iziToast.show({
-          message: "We're sorry, but you've reached the end of search results.",
-        });
 
-        return;
-      } else {
-        const markup = createMarkup(data.hits);
-        list.insertAdjacentHTML('beforeend', markup); // вставляє в дом розмітку однією операцією
-        gallery.refresh();
+  try {
+    const response = await fetchUsers(inputValue, page);
+    const { data } = response;
 
-        // Логіка прокручування сторінки
-        const card = document.querySelector('.card');
+    if (data.totalHits <= getCards) {
+      const markup = createMarkup(data.hits);
+      list.insertAdjacentHTML('beforeend', markup); // вставляє в дом розмітку однією операцією
+      gallery.refresh();
+      hiddenBtn();
+      iziToast.show({
+        message: "We're sorry, but you've reached the end of search results.",
+      });
+      return;
+    } else {
+      const markup = createMarkup(data.hits);
+      list.insertAdjacentHTML('beforeend', markup); // вставляє в дом розмітку однією операцією
+      gallery.refresh();
 
-        let rect = card.getBoundingClientRect();
-        // console.log(rect);
+      // Логіка прокручування сторінки
+      const card = document.querySelector('.card');
 
-        window.scrollBy({
-          top: rect.height * 2,
-          behavior: 'smooth',
-        });
-      }
-    })
-    .catch(error => console.log(error.message))
-    .finally(() => {
-      hiddenLoader();
-    });
+      let rect = card.getBoundingClientRect();
+      // console.log(rect);
+
+      window.scrollBy({
+        top: rect.height * 2,
+        behavior: 'smooth',
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+  hiddenLoader();
 }
 
 form.addEventListener('submit', handlerSubmit);
